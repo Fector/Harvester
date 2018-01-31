@@ -40,7 +40,7 @@ class CollectorTest extends TestCase
     public function testGetAction($queryParam, $expectedArgs)
     {
         $collector = new Collector();
-        $action = $collector->getAction($queryParam);
+        $action = $collector->getActions($queryParam);
         $this->assertEquals('with', $action['method']);
         $this->assertEquals($expectedArgs, $action['args']);
     }

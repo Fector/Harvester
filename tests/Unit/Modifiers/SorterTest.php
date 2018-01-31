@@ -38,7 +38,7 @@ class SorterTest extends TestCase
     public function testGetAction($queryParam, $expectedArgs)
     {
         $sorter = new Sorter();
-        $action = $sorter->getAction($queryParam);
+        $action = $sorter->getActions($queryParam);
         $this->assertEquals('orderBy', $action['method']);
         $this->assertEquals($expectedArgs, $action['args']);
     }

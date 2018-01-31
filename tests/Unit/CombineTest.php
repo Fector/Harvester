@@ -32,7 +32,7 @@ class CombineTest extends TestCase
     {
         $combine = new Combine(['_sort' => 'title']);
         $sorter = $this->createMock(Modifier::class);
-        $sorter->method('getAction')->willReturn([
+        $sorter->method('getActions')->willReturn([
             [
                 'method' => 'orderBy',
                 'args' => ['title', 'asc']
@@ -52,7 +52,7 @@ class CombineTest extends TestCase
     {
         $combine = new Combine(['_sort' => 'title']);
         $limiter = $this->createMock(Modifier::class);
-        $limiter->method('getAction')->willReturn([
+        $limiter->method('getActions')->willReturn([
             [
                 'method' => 'orderBy',
                 'args' => ['title', 'asc']

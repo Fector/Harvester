@@ -1,6 +1,6 @@
 {
     "name": "fector/harvester",
-    "description": "A simple library that provide modification object and include anyone modifier",
+    "description": "A simple library that provide modify Model by request query",
     "type": "library",
     "license": "MIT",
     "authors": [

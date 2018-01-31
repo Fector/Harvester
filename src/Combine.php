@@ -39,7 +39,7 @@ class Combine
             if ($this->hasModifier($key)){
                 $modifier = $this->getModifierInstance($key);
                 if ($modifier->isValid($value)){
-                    $actions = $modifier->getAction($value);
+                    $actions = $modifier->getActions($value);
                     foreach ($actions as $action){
                         $model = call_user_func_array([$model, $action['method']], $action['args']);
                     }

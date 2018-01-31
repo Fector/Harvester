@@ -54,7 +54,7 @@ class LimiterTest extends TestCase
     public function testGetAction($queryParam, $expectedAction)
     {
         $sorter = new Limiter();
-        $action = $sorter->getAction($queryParam);
+        $action = $sorter->getActions($queryParam);
         $this->assertEquals($expectedAction, $action);
     }
 

@@ -12,7 +12,7 @@ interface Modifier
      * @param string $value
      * @return array
      */
-    public function getAction(string $value): array;
+    public function getActions(string $value): array;
 
     /**
      * @param string $value

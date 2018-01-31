@@ -13,7 +13,7 @@ class Collector implements Modifier
      * @param string $value
      * @return array
      */
-    public function getAction(string $value): array
+    public function getActions(string $value): array
     {
         return [
             'method' => self::METHOD_NAME,

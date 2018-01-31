@@ -17,7 +17,7 @@ class Limiter implements Modifier
      * @param string $value
      * @return array
      */
-    public function getAction(string $value): array
+    public function getActions(string $value): array
     {
         $args = $this->parseArgs($value);
         $actions = [];
