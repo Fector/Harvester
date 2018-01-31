@@ -1,13 +1,13 @@
 <?php
 
-
 namespace Fector\Harvester\Modifiers;
+
 
 use Fector\Harvester\Modifier;
 
-class Sorter implements Modifier
+class Collector implements Modifier
 {
-    CONST METHOD_NAME = 'orderBy';
+    CONST METHOD_NAME = 'with';
 
     /**
      * @param string $value
@@ -21,9 +21,13 @@ class Sorter implements Modifier
         ];
     }
 
+    /**
+     * @param string $value
+     * @return bool
+     */
     public function isValid(string $value): bool
     {
-        return (bool)preg_match('/^\-?[a-z_]+$/', $value);
+        return (bool)preg_match('/^[a-z][a-z_,]+[a-z]$/', $value);
     }
 
     /**
@@ -32,20 +36,11 @@ class Sorter implements Modifier
      */
     protected function parseArgs(string $value): array
     {
-        $column = $value;
-        $direction = 'asc';
-        if (substr($value, 0, 1) === '-') {
-            $column = substr($value, 1);
-            $direction = 'desc';
+        $relations = [$value];
+        if (strpos($value, ',')) {
+            $relations = explode(',', $value);
         }
-        return  [$column, $direction];
+        return  $relations;
     }
 
-    /**
-     * @return array
-     */
-    protected function getMethods(): array
-    {
-        return ['orderBy'];
-    }
 }
