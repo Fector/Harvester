@@ -4,14 +4,18 @@ namespace Fector\Harvester;
 
 /**
  * Class Combine
- *
- *
- *
  * @package Fector\Harvester
  */
 class Combine
 {
+    /**
+     * @var array
+     */
     protected $requestData;
+
+    /**
+     * @var array
+     */
     protected $modifiers = [];
 
     /**
@@ -35,8 +39,10 @@ class Combine
             if ($this->hasModifier($key)){
                 $modifier = $this->getModifierInstance($key);
                 if ($modifier->isValid($value)){
-                    $action = $modifier->getAction($value);
-                    $model = call_user_func_array([$model, $action['method']], $action['args']);
+                    $actions = $modifier->getAction($value);
+                    foreach ($actions as $action){
+                        $model = call_user_func_array([$model, $action['method']], $action['args']);
+                    }
                 }
             }
         }
