@@ -1,14 +1,12 @@
 <?php
 
-namespace Fector\Harvester\Modifiers;
-
-use Fector\Harvester\Modifier;
+namespace Fector\Harvester\Combines;
 
 /**
  * Class Limiter
- * @package Fector\Harvester\Modifiers
+ * @package Fector\Harvester\Combines
  */
-class Limiter implements Modifier
+class Limiter implements CombineInterface
 {
     CONST OFFSET_METHOD = 'offset';
     CONST LIMIT_METHOD = 'limit';

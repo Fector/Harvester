@@ -1,8 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Fector\Harvester\Combine;
-use Fector\Harvester\Modifier;
+use Fector\Harvester\Harvester;
+use Fector\Harvester\Combines\CombineInterface;
 
 class AnyObject
 {
@@ -30,29 +30,29 @@ class CombineTest extends TestCase
 {
     public function testRecycleWithSingleMethod()
     {
-        $combine = new Combine(['_sort' => 'title']);
-        $sorter = $this->createMock(Modifier::class);
-        $sorter->method('getActions')->willReturn([
+        $harvester = new Harvester(['_sort' => 'title']);
+        $combine = $this->createMock(CombineInterface::class);
+        $combine->method('getActions')->willReturn([
             [
                 'method' => 'orderBy',
                 'args' => ['title', 'asc']
             ]
         ]);
-        $sorter->method('isValid')->willReturn(true);
-        $combine->loadModifier('_sort', $sorter);
-        $this->assertEquals(true, $combine->hasModifier('_sort'));
-        $this->assertEquals($sorter, $combine->getModifierInstance('_sort'));
+        $combine->method('isValid')->willReturn(true);
+        $harvester->loadModifier('_sort', $combine);
+        $this->assertEquals(true, $harvester->hasModifier('_sort'));
+        $this->assertEquals($combine, $harvester->getModifierInstance('_sort'));
 
         $anyObject = new AnyObject();
-        $anyObject = $combine->recycle($anyObject);
+        $anyObject = $harvester->recycle($anyObject);
         $this->assertEquals('title', $anyObject->key);
     }
 
     public function testRecycleWithMultipleMethods()
     {
-        $combine = new Combine(['_sort' => 'title']);
-        $limiter = $this->createMock(Modifier::class);
-        $limiter->method('getActions')->willReturn([
+        $harvester = new Harvester(['_sort' => 'title']);
+        $combine = $this->createMock(CombineInterface::class);
+        $combine->method('getActions')->willReturn([
             [
                 'method' => 'orderBy',
                 'args' => ['title', 'asc']
@@ -62,13 +62,13 @@ class CombineTest extends TestCase
                 'args' => [20]
             ]
         ]);
-        $limiter->method('isValid')->willReturn(true);
-        $combine->loadModifier('_sort', $limiter);
-        $this->assertEquals(true, $combine->hasModifier('_sort'));
-        $this->assertEquals($limiter, $combine->getModifierInstance('_sort'));
+        $combine->method('isValid')->willReturn(true);
+        $harvester->loadModifier('_sort', $combine);
+        $this->assertEquals(true, $harvester->hasModifier('_sort'));
+        $this->assertEquals($combine, $harvester->getModifierInstance('_sort'));
 
         $anyObject = new AnyObject();
-        $anyObject = $combine->recycle($anyObject);
+        $anyObject = $harvester->recycle($anyObject);
         $this->assertEquals('title', $anyObject->key);
         $this->assertEquals(20, $anyObject->limit);
 

@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Fector\Harvester\Modifiers\Sorter;
+use Fector\Harvester\Combines\Sorter;
 
 class SorterTest extends TestCase
 {

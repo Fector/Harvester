@@ -2,11 +2,13 @@
 
 namespace Fector\Harvester;
 
+use Fector\Harvester\Combines\CombineInterface;
+
 /**
  * Class Combine
  * @package Fector\Harvester
  */
-class Combine
+class Harvester
 {
     /**
      * @var array
@@ -51,18 +53,18 @@ class Combine
 
     /**
      * @param string $key
-     * @param Modifier $modifier
+     * @param CombineInterface $modifier
      */
-    public function loadModifier(string $key, Modifier $modifier): void
+    public function loadModifier(string $key, CombineInterface $modifier): void
     {
         $this->modifiers[$key] = $modifier;
     }
 
     /**
      * @param string $key
-     * @return Modifier
+     * @return CombineInterface
      */
-    public function getModifierInstance(string $key): Modifier
+    public function getModifierInstance(string $key): CombineInterface
     {
         return $this->modifiers[$key];
     }

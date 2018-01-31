@@ -1,12 +1,12 @@
 <?php
 
-namespace Fector\Harvester;
+namespace Fector\Harvester\Combines;
 
 /**
- * Interface Modifier
- * @package Fector\Harvester
+ * Interface Combine
+ * @package Fector\Harvester\Combines
  */
-interface Modifier
+interface CombineInterface
 {
     /**
      * @param string $value

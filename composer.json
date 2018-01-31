@@ -1,5 +1,5 @@
 {
-    "name": "fector/harvester",
+    "name": "fector/harvest",
     "description": "A simple library that provide modify Model by request query",
     "type": "library",
     "license": "MIT",

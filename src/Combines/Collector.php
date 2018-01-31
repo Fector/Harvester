@@ -1,11 +1,12 @@
 <?php
 
-namespace Fector\Harvester\Modifiers;
+namespace Fector\Harvester\Combines;
 
-
-use Fector\Harvester\Modifier;
-
-class Collector implements Modifier
+/**
+ * Class Collector
+ * @package Fector\Harvester\Combines
+ */
+class Collector implements CombineInterface
 {
     CONST METHOD_NAME = 'with';
 

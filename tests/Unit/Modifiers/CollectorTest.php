@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Fector\Harvester\Modifiers\Collector;
+use Fector\Harvester\Combines\Collector;
 
 class CollectorTest extends TestCase
 {

@@ -1,11 +1,12 @@
 <?php
 
+namespace Fector\Harvester\Combines;
 
-namespace Fector\Harvester\Modifiers;
-
-use Fector\Harvester\Modifier;
-
-class Sorter implements Modifier
+/**
+ * Class Sorter
+ * @package Fector\Harvester\Combines
+ */
+class Sorter implements CombineInterface
 {
     CONST METHOD_NAME = 'orderBy';
 
