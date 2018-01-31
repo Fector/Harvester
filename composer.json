@@ -1,0 +1,24 @@
+{
+    "name": "fector/harvester",
+    "description": "A simple library that provide modification object and include anyone modifier",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Evgeniy Pereverzev",
+            "email": "epereverzev@phoenixit.ru"
+        }
+    ],
+    "require": {
+        "php": "^7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fector\\Harvester\\": "src"
+        }
+    },
+    "minimum-stability": "dev"
+}
