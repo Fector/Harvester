@@ -1,6 +1,6 @@
 <?php
 
-namespace Fector\Harvester\Combines;
+namespace Fector\Harvest\Combines;
 
 /**
  * Class Limiter

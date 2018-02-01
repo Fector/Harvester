@@ -10,14 +10,15 @@
         }
     ],
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "illuminate/support": "^5.7@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5"
     },
     "autoload": {
         "psr-4": {
-            "Fector\\Harvester\\": "src"
+            "Fector\\Harvest\\": "src"
         }
     },
     "minimum-stability": "dev"

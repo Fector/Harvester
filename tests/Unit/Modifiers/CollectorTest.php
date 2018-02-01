@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Fector\Harvester\Combines\Collector;
+use Fector\Harvest\Combines\Collector;
 
 class CollectorTest extends TestCase
 {
@@ -41,7 +41,7 @@ class CollectorTest extends TestCase
     {
         $collector = new Collector();
         $action = $collector->getActions($queryParam);
-        $this->assertEquals('with', $action['method']);
+        $this->assertEquals($collector::METHOD_NAME, $action['method']);
         $this->assertEquals($expectedArgs, $action['args']);
     }
 

@@ -1,8 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Fector\Harvester\Harvester;
-use Fector\Harvester\Combines\CombineInterface;
+use Fector\Harvest\Harvester;
+use Fector\Harvest\Combines\CombineInterface;
 
 class AnyObject
 {

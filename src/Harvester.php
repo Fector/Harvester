@@ -1,8 +1,8 @@
 <?php
 
-namespace Fector\Harvester;
+namespace Fector\Harvest;
 
-use Fector\Harvester\Combines\CombineInterface;
+use Fector\Harvest\Combines\CombineInterface;
 
 /**
  * Class Combine

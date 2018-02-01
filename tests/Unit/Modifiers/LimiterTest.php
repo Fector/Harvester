@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Fector\Harvester\Combines\Limiter;
+use Fector\Harvest\Combines\Limiter;
 
 class LimiterTest extends TestCase
 {

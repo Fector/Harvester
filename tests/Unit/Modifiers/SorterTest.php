@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use Fector\Harvester\Combines\Sorter;
+use Fector\Harvest\Combines\Sorter;
 
 class SorterTest extends TestCase
 {
@@ -39,7 +39,7 @@ class SorterTest extends TestCase
     {
         $sorter = new Sorter();
         $action = $sorter->getActions($queryParam);
-        $this->assertEquals('orderBy', $action['method']);
+        $this->assertEquals($sorter::METHOD_NAME, $action['method']);
         $this->assertEquals($expectedArgs, $action['args']);
     }
 
