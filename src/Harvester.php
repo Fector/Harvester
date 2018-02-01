@@ -5,7 +5,7 @@ namespace Fector\Harvest;
 use Fector\Harvest\Combines\CombineInterface;
 
 /**
- * Class Combine
+ * Class Harvester
  * @package Fector\Harvester
  */
 class Harvester
@@ -18,7 +18,7 @@ class Harvester
     /**
      * @var array
      */
-    protected $modifiers = [];
+    protected $combines = [];
 
     /**
      * Combine constructor.
@@ -28,7 +28,7 @@ class Harvester
     public function __construct(array $requestData, array $config = [])
     {
         $this->requestData = $requestData;
-        $this->modifiers = $config;
+        $this->combines = $this->loadCombineFromArray($config);
     }
 
     /**
@@ -38,10 +38,10 @@ class Harvester
     public function recycle($model)
     {
         foreach ($this->requestData as $key => $value){
-            if ($this->hasModifier($key)){
-                $modifier = $this->getModifierInstance($key);
-                if ($modifier->isValid($value)){
-                    $actions = $modifier->getActions($value);
+            if ($this->hasCombine($key)){
+                $combine = $this->getCombineInstance($key);
+                if ($combine->isValid($value)){
+                    $actions = $combine->getActions($value);
                     foreach ($actions as $action){
                         $model = call_user_func_array([$model, $action['method']], $action['args']);
                     }
@@ -55,26 +55,46 @@ class Harvester
      * @param string $key
      * @param CombineInterface $modifier
      */
-    public function loadModifier(string $key, CombineInterface $modifier): void
+    public function loadCombine(string $key, CombineInterface $modifier): void
     {
-        $this->modifiers[$key] = $modifier;
+        $this->combines[$key] = $modifier;
     }
 
     /**
      * @param string $key
      * @return CombineInterface
      */
-    public function getModifierInstance(string $key): CombineInterface
+    public function getCombineInstance(string $key): CombineInterface
     {
-        return $this->modifiers[$key];
+        return $this->combines[$key];
     }
 
     /**
      * @param $key
      * @return bool
      */
-    public function hasModifier($key): bool
+    public function hasCombine($key): bool
     {
-        return (isset($this->modifiers[$key]) && $this->modifiers[$key]);
+        return (isset($this->combines[$key]) && $this->combines[$key]);
+    }
+
+    /**
+     * @param array $config
+     * @return array
+     */
+    protected function loadCombineFromArray(array $config): array
+    {
+        $combines = [];
+        foreach ($config as $key => $value){
+            if ($value instanceof CombineInterface){
+                $combines[$key] = $value;
+                continue;
+            }
+            $combine = new $value();
+            if ($combine instanceof CombineInterface){
+                $combines[$key] = $combine;
+            }
+        }
+        return $combines;
     }
 }

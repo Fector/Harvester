@@ -3,6 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use Fector\Harvest\Harvester;
 use Fector\Harvest\Combines\CombineInterface;
+use Fector\Harvest\Combines\Limiter;
 
 class AnyObject
 {
@@ -26,7 +27,7 @@ class AnyObject
     }
 }
 
-class CombineTest extends TestCase
+class HarvesterTest extends TestCase
 {
     public function testRecycleWithSingleMethod()
     {
@@ -39,9 +40,9 @@ class CombineTest extends TestCase
             ]
         ]);
         $combine->method('isValid')->willReturn(true);
-        $harvester->loadModifier('_sort', $combine);
-        $this->assertEquals(true, $harvester->hasModifier('_sort'));
-        $this->assertEquals($combine, $harvester->getModifierInstance('_sort'));
+        $harvester->loadCombine('_sort', $combine);
+        $this->assertEquals(true, $harvester->hasCombine('_sort'));
+        $this->assertEquals($combine, $harvester->getCombineInstance('_sort'));
 
         $anyObject = new AnyObject();
         $anyObject = $harvester->recycle($anyObject);
@@ -63,14 +64,28 @@ class CombineTest extends TestCase
             ]
         ]);
         $combine->method('isValid')->willReturn(true);
-        $harvester->loadModifier('_sort', $combine);
-        $this->assertEquals(true, $harvester->hasModifier('_sort'));
-        $this->assertEquals($combine, $harvester->getModifierInstance('_sort'));
+        $harvester->loadCombine('_sort', $combine);
+        $this->assertEquals(true, $harvester->hasCombine('_sort'));
+        $this->assertEquals($combine, $harvester->getCombineInstance('_sort'));
 
         $anyObject = new AnyObject();
         $anyObject = $harvester->recycle($anyObject);
         $this->assertEquals('title', $anyObject->key);
         $this->assertEquals(20, $anyObject->limit);
+    }
 
+    public function testLoadDefaultCombines()
+    {
+        $sorter = $this->createMock(CombineInterface::class);
+        $harvester = new Harvester(
+            ['_sort' => 'title'],
+            [
+                '_sort' => $sorter,
+                '_limit' => Limiter::class
+            ]
+        );
+        $this->assertTrue($harvester->hasCombine('_sort'));
+        $this->assertTrue($harvester->hasCombine('_limit'));
+        $this->assertFalse($harvester->hasCombine('_with'));
     }
 }

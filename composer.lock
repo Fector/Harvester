@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b416a8001e13a0e6eeca7ce2001193f",
+    "content-hash": "f4930e3cfc6cfe3529e42e57e106194a",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -74,6 +74,50 @@
             "time": "2018-01-12T11:45:27+00:00"
         },
         {
+            "name": "illuminate/container",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/container.git",
+                "reference": "10c7b031dd9afe1877ebbdbb3a6f813f950aac9a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/container/zipball/10c7b031dd9afe1877ebbdbb3a6f813f950aac9a",
+                "reference": "10c7b031dd9afe1877ebbdbb3a6f813f950aac9a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.7.*",
+                "php": "^7.1.3",
+                "psr/container": "~1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Container\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Container package.",
+            "homepage": "https://laravel.com",
+            "time": "2018-01-21T02:13:58+00:00"
+        },
+        {
             "name": "illuminate/contracts",
             "version": "dev-master",
             "source": {
@@ -116,6 +160,65 @@
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
             "time": "2018-01-21T02:13:58+00:00"
+        },
+        {
+            "name": "illuminate/database",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/database.git",
+                "reference": "888ea6986066d3c182722aa1a76e216b05ea846c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/888ea6986066d3c182722aa1a76e216b05ea846c",
+                "reference": "888ea6986066d3c182722aa1a76e216b05ea846c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/container": "5.7.*",
+                "illuminate/contracts": "5.7.*",
+                "illuminate/support": "5.7.*",
+                "php": "^7.1.3"
+            },
+            "suggest": {
+                "doctrine/dbal": "Required to rename columns and drop SQLite columns (~2.6).",
+                "fzaninotto/faker": "Required to use the eloquent factory builder (~1.4).",
+                "illuminate/console": "Required to use the database commands (5.7.*).",
+                "illuminate/events": "Required to use the observers with Eloquent (5.7.*).",
+                "illuminate/filesystem": "Required to use the migrations (5.7.*).",
+                "illuminate/pagination": "Required to paginate the result set (5.7.*)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Database\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Database package.",
+            "homepage": "https://laravel.com",
+            "keywords": [
+                "database",
+                "laravel",
+                "orm",
+                "sql"
+            ],
+            "time": "2018-01-27T10:17:16+00:00"
         },
         {
             "name": "illuminate/support",
@@ -1914,7 +2017,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "illuminate/support": 20
+        "illuminate/support": 20,
+        "illuminate/database": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
