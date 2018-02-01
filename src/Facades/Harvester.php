@@ -1,12 +1,12 @@
 <?php
 
-namespace Fector\Facades;
+namespace Fector\Harvest\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
  * Class Harvester
- * @package Fector\Facades
+ * @package Fector\Harvest\Facades
  */
 class Harvester extends Facade
 {

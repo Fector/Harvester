@@ -12,7 +12,9 @@ class HarvestServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->mergeConfigFrom('../config/harvest.php', 'harvest');
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/harvest.php', 'harvest'
+        );
     }
 
     public function register()
