@@ -10,11 +10,15 @@ use Illuminate\Support\ServiceProvider;
  */
 class HarvestServiceProvider extends ServiceProvider
 {
+    protected $defer = false;
     public function boot()
     {
-        $this->mergeConfigFrom(
+        $this->publishes([
+            __DIR__.'/../config/harvest.php' => config_path('harvest.php'),
+        ]);
+        /*$this->mergeConfigFrom(
             __DIR__ . '/../config/harvest.php', 'harvest'
-        );
+        );*/
     }
 
     public function register()

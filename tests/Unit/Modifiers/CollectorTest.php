@@ -41,8 +41,8 @@ class CollectorTest extends TestCase
     {
         $collector = new Collector();
         $action = $collector->getActions($queryParam);
-        $this->assertEquals($collector::METHOD_NAME, $action['method']);
-        $this->assertEquals($expectedArgs, $action['args']);
+        $this->assertEquals($collector::METHOD_NAME, $action[0]['method']);
+        $this->assertEquals($expectedArgs, $action[0]['args']);
     }
 
     /**

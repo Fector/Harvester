@@ -3,28 +3,28 @@
 namespace Fector\Harvest;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class EloquentHarvester
  * @package Fector\Harvest
  */
-class EloquentHarvester extends Harvester
+class EloquentHarvester
 {
-    /**
-     * @param $model
-     * @return Model
-     */
-    public function recycle($model): Model
+    protected $defaultHarvester;
+
+    public function __construct(Request $request)
     {
-        return $this->recycleModel($model);
+        $this->defaultHarvester = new Harvester($request->all(), config('harvest.combines'));
     }
 
     /**
-     * @param Model $model
-     * @return Model
+     * @param Builder $model
+     * @return Builder
      */
-    protected function recycleModel(Model $model): Model
+    public function recycle(Builder $model): Builder
     {
-        return parent::recycle($model);
+        return $this->defaultHarvester->recycle($model);
     }
 }

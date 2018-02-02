@@ -15,6 +15,6 @@ class Harvester extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'EloquentHarvester';
+        return 'Harvester';
     }
 }

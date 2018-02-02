@@ -17,8 +17,10 @@ class Collector implements CombineInterface
     public function getActions(string $value): array
     {
         return [
-            'method' => self::METHOD_NAME,
-            'args' => $this->parseArgs($value)
+            [
+                'method' => self::METHOD_NAME,
+                'args' => $this->parseArgs($value)
+            ]
         ];
     }
 
