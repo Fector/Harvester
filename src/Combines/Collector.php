@@ -30,7 +30,7 @@ class Collector implements CombineInterface
      */
     public function isValid(string $value): bool
     {
-        return (bool)preg_match('/^[a-z][a-z_,]+[a-z]$/', $value);
+        return (bool)preg_match('/^[a-z][a-z_,.]+[a-z]$/', $value);
     }
 
     /**
