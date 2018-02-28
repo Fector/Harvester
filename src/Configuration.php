@@ -30,7 +30,7 @@ class Configuration
     {
         $this->instructions = $options['instructions'] ?? [];
         $this->delimiter = $options['delimiter'] ?? ':';
-        $this->subCommandDelimiter = $options['delimiter'] ?? '->';
+        $this->subCommandDelimiter = $options['subCommandDelimiter'] ?? '->';
     }
 
     /**
