@@ -1,7 +1,13 @@
 <?php
 
 return [
-    '_sort' => \Fector\Harvest\Combines\Sorter::class,
-    '_limit' => \Fector\Harvest\Combines\Limiter::class,
-    '_with' => \Fector\Harvest\Combines\Collector::class,
+    'instructions' => [
+        '_sort' => \Fector\Harvest\Instructions\SortInstruction::class,
+        '_with' => '',
+        '_select' => '',
+        '_filter' => '',
+        '_limit' => '',
+    ],
+    'delimiter' => ':',
+    'subCommandDelimiter' => '->'
 ];

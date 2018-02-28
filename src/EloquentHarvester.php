@@ -3,6 +3,7 @@
 namespace Fector\Harvest;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -11,19 +12,61 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class EloquentHarvester
 {
-    protected $defaultHarvester;
+    /**
+     * @var array
+     */
+    protected $queries = [];
 
-    public function __construct(Request $request)
+    /**
+     * @var Combine
+     */
+    protected $combine;
+
+    /**
+     * @var Configuration
+     */
+    protected $config;
+
+
+    /**
+     * EloquentHarvester constructor.
+     * @param Request $request
+     * @param array $options
+     */
+    public function __construct(Request $request, array $options)
     {
-        $this->defaultHarvester = new Harvester($request->all(), config('harvest.combines'));
+        $this->queries = $request->query();
+        //@TODO вынести это гавно
+        $this->combine =  new Combine();
+        $this->config = new Configuration($options);
     }
 
     /**
-     * @param Builder $model
+     * @param Builder $builder
      * @return Builder
+     *
+     * @throws
      */
-    public function recycle(Builder $model): Builder
+    public function recycle(Builder $builder): Builder {
+        $this->combine->setBuilder($builder);
+        foreach ($this->queries as $key => $value) {
+            $this->combine->recycle($this->config->getInstruction($key, $value));
+        }
+        return $this->combine->getBuilder();
+    }
+
+    /**
+     * @param Model $model
+     * @return Model
+     *
+     * @throws
+     */
+    public function compose(Model $model): Model
     {
-        return $this->defaultHarvester->recycle($model);
+        $this->combine->setModel($model);
+        foreach ($this->queries as $key => $value) {
+            $this->combine->compose($this->config->getInstruction($key, $value));
+        }
+        return $this->combine->getModel();
     }
 }
