@@ -31,11 +31,11 @@ class EloquentHarvester
     /**
      * EloquentHarvester constructor.
      * @param Request $request
-     * @param array $options
      */
-    public function __construct(Request $request, array $options)
+    public function __construct(Request $request)
     {
         $this->queries = $request->query();
+        $options = config('harvest');
         //@TODO вынести это гавно
         $this->combine =  new Combine();
         $this->config = new Configuration($options);
