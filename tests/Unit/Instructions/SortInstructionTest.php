@@ -5,6 +5,9 @@ use PHPUnit\Framework\TestCase;
 
 class SortInstructionTest extends TestCase
 {
+    /**
+     * @return array
+     */
     public function additionalProvider()
     {
         return [
@@ -24,7 +27,7 @@ class SortInstructionTest extends TestCase
      * @param $value
      * @param $expected
      */
-    public function testGetArgs($value, $expected)
+    public function testArgs($value, $expected)
     {
         $instruction = new SortInstruction($value);
         $this->assertArraySubset($expected, $instruction->args());

@@ -3,8 +3,8 @@
 return [
     'instructions' => [
         '_sort' => \Fector\Harvest\Instructions\SortInstruction::class,
-/*        '_with' => '',
-        '_select' => '',
+        '_with' => \Fector\Harvest\Instructions\CollectInstruction::class,
+        /*'_select' => '',
         '_filter' => '',
         '_limit' => '',*/
     ],

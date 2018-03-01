@@ -2,9 +2,12 @@
 
 namespace Fector\Harvest\Instructions;
 
-
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * Class SortInstruction
+ * @package Fector\Harvest\Instructions
+ */
 class SortInstruction implements InstructionInterface
 {
     /**
