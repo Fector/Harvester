@@ -40,7 +40,7 @@ class CollectInstruction implements InstructionInterface
      */
     public function action(): \Closure
     {
-        $relations = '';
+        $relations = $this->relations;
         return function (Builder $builder) use ($relations) {
             $builder->with($relations);
         };
