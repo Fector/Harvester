@@ -10,7 +10,14 @@ use Illuminate\Support\ServiceProvider;
  */
 class HarvestServiceProvider extends ServiceProvider
 {
+    /**
+     * @var bool
+     */
     protected $defer = false;
+
+    /**
+     *
+     */
     public function boot()
     {
         $this->publishes([
@@ -21,6 +28,9 @@ class HarvestServiceProvider extends ServiceProvider
         );*/
     }
 
+    /**
+     *
+     */
     public function register()
     {
         $this->app->bind('Harvester', 'Fector\Harvest\EloquentHarvester');

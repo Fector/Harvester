@@ -15,58 +15,47 @@ class EloquentHarvester
     /**
      * @var array
      */
-    protected $queries = [];
+    protected $params = [];
 
     /**
-     * @var Combine
+     * @var HarvesterInterface
      */
-    protected $combine;
-
-    /**
-     * @var Configuration
-     */
-    protected $config;
-
+    protected $harvester;
 
     /**
      * EloquentHarvester constructor.
      * @param Request $request
+     * @param null $harvester
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, $harvester = null)
     {
-        $this->queries = $request->query();
-        $options = config('harvest');
-        //@TODO вынести это гавно
-        $this->combine =  new Combine();
-        $this->config = new Configuration($options);
+        $this->params = $request->query();
+        if (!$harvester) {
+            $this->harvester = new Harvester();
+        }
+        $this->setHarvester($harvester);
+    }
+
+    public function setHarvester(HarvesterInterface $harvester)
+    {
+        $this->harvester = $harvester;
     }
 
     /**
-     * @param Builder $builder
-     * @return Builder
-     *
-     * @throws
+     * @param Builder|Model $entity
+     * @return Builder|Model
      */
-    public function recycle(Builder $builder): Builder {
-        $this->combine->setBuilder($builder);
-        foreach ($this->queries as $key => $value) {
-            $this->combine->recycle($this->config->getInstruction($key, $value));
+    public function recycle($entity)
+    {
+        $harvester = $this->harvester;
+        foreach ($this->params as $key => $value) {
+            if ($decorator = $this->getDecorator($key)) {
+                $harvester = new $decorator($harvester);
+            }
         }
-        return $this->combine->getBuilder();
+        if ($entity instanceof Builder) return $harvester->recycleBuilder($entity);
+        if ($entity instanceof Model) return $harvester->recycleModel($entity);
+        return $entity;
     }
 
-    /**
-     * @param Model $model
-     * @return Model
-     *
-     * @throws
-     */
-    public function compose(Model $model): Model
-    {
-        $this->combine->setModel($model);
-        foreach ($this->queries as $key => $value) {
-            $this->combine->compose($this->config->getInstruction($key, $value));
-        }
-        return $this->combine->getModel();
-    }
 }

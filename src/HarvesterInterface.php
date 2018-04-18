@@ -6,26 +6,20 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Harvester
+ * Interface HarvesterInterface
  * @package Fector\Harvest
  */
-class Harvester implements HarvesterInterface
+interface HarvesterInterface
 {
     /**
      * @param Builder $builder
      * @return Builder
      */
-    public function recycleBuilder(Builder $builder): Builder
-    {
-        return $builder;
-    }
+    public function recycleBuilder(Builder $builder): Builder;
 
     /**
      * @param Model $model
      * @return Model
      */
-    public function recycleModel(Model $model): Model
-    {
-        return $model;
-    }
+    public function recycleModel(Model $model): Model;
 }
