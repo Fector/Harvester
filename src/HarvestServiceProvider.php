@@ -33,6 +33,7 @@ class HarvestServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind('Fector\Harvest\HarvesterInterface', 'Fector\Harvest\Harvester');
         $this->app->bind('Harvester', 'Fector\Harvest\EloquentHarvester');
     }
 }

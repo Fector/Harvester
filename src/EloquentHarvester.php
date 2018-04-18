@@ -25,15 +25,10 @@ class EloquentHarvester
     /**
      * EloquentHarvester constructor.
      * @param Request $request
-     * @param null $harvester
      */
-    public function __construct(Request $request, $harvester = null)
+    public function __construct(Request $request)
     {
         $this->params = $request->query();
-        if (!$harvester) {
-            $this->harvester = new Harvester();
-        }
-        $this->setHarvester($harvester);
         $this->params = config('harvest.decorators');
     }
 
