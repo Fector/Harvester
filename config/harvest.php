@@ -1,12 +1,10 @@
 <?php
 
 return [
-    'instructions' => [
-        '_sort' => \Fector\Harvest\Instructions\SortInstruction::class,
-        '_with' => \Fector\Harvest\Instructions\CollectInstruction::class,
-        '_select' => \Fector\Harvest\Instructions\SelectInstruction::class,
-        '_filter' => \Fector\Harvest\Instructions\FilterInstruction::class,
-        '_limit' => \Fector\Harvest\Instructions\LimitInstruction::class,
+    'decorators' => [
+        '_sort' => \Fector\Harvest\Decorators\SortDecorator::class,
+        '_with' => \Fector\Harvest\Decorators\AssociationDecorator::class,
+        '_with_cnt' => \Fector\Harvest\Decorators\CountDecorator::class,
     ],
     'delimiter' => ':',
     'subCommandDelimiter' => '->'

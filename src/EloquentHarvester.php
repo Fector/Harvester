@@ -34,9 +34,13 @@ class EloquentHarvester
             $this->harvester = new Harvester();
         }
         $this->setHarvester($harvester);
+        $this->params = config('harvest.decorators');
     }
 
-    public function setHarvester(HarvesterInterface $harvester)
+    /**
+     * @param HarvesterInterface $harvester
+     */
+    public function setHarvester(HarvesterInterface $harvester): void
     {
         $this->harvester = $harvester;
     }
@@ -49,7 +53,7 @@ class EloquentHarvester
     {
         $harvester = $this->harvester;
         foreach ($this->params as $key => $value) {
-            if ($decorator = $this->getDecorator($key)) {
+            if ($this->hasDecorator($key) && $decorator = $this->getDecorator($key)) {
                 $harvester = new $decorator($harvester);
             }
         }
@@ -58,4 +62,21 @@ class EloquentHarvester
         return $entity;
     }
 
+    /**
+     * @param string $key
+     * @return string
+     */
+    protected function getDecorator(string $key): string
+    {
+        return $this->params[$key];
+    }
+
+    /**
+     * @param string $key
+     * @return bool
+     */
+    protected function hasDecorator(string $key): bool
+    {
+        return (bool)(isset($this->params['$key']) && $this->params[$key]);
+    }
 }
