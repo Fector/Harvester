@@ -23,13 +23,19 @@ class EloquentHarvester
     protected $harvester;
 
     /**
+     * @var array
+     */
+    protected $decorators = [];
+
+    /**
      * EloquentHarvester constructor.
      * @param Request $request
      */
     public function __construct(Request $request)
     {
         $this->params = $request->query();
-        $this->params = config('harvest.decorators');
+        $this->decorators = config('harvest.decorators');
+        $this->harvester = new Harvester();
     }
 
     /**
@@ -63,7 +69,7 @@ class EloquentHarvester
      */
     protected function getDecorator(string $key): string
     {
-        return $this->params[$key];
+        return $this->decorators[$key];
     }
 
     /**
@@ -72,6 +78,6 @@ class EloquentHarvester
      */
     protected function hasDecorator(string $key): bool
     {
-        return (bool)(isset($this->params['$key']) && $this->params[$key]);
+        return (bool)(isset($this->decorators['$key']) && $this->decorators[$key]);
     }
 }
