@@ -1,6 +1,6 @@
 ## A simple library that provide modify Model by request query
 
-###Installation
+### Installation
 Install the package through composer
 ``` bash
 composer require fector/harvest
@@ -60,6 +60,10 @@ and descending with prefix "-"
 You may specify which relationships should be eager loaded with data. Collector load relation if it exists.
 ```
 /api/books?_with=authors
+```
+or 
+```
+/api/books?_with=authors,publisher
 ```
 
 Plan to add new default Combines:
