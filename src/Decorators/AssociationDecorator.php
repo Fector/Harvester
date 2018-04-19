@@ -43,6 +43,6 @@ class AssociationDecorator extends AbstractDecorator
      */
     protected function canUse(string $value): bool
     {
-        return (bool)preg_match('/^[a-z][a-z_.]+[a-z]$/', $value);
+        return (bool)preg_match('/^[a-z][a-z_.,]+[a-z]$/', $value);
     }
 }

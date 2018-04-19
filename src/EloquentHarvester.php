@@ -55,7 +55,7 @@ class EloquentHarvester
         $harvester = $this->harvester;
         foreach ($this->params as $key => $value) {
             if ($this->hasDecorator($key) && $decorator = $this->getDecorator($key)) {
-                $harvester = new $decorator($harvester);
+                $harvester = new $decorator($harvester, $value);
             }
         }
         if ($entity instanceof Builder) return $harvester->recycleBuilder($entity);
@@ -78,6 +78,6 @@ class EloquentHarvester
      */
     protected function hasDecorator(string $key): bool
     {
-        return (bool)(isset($this->decorators['$key']) && $this->decorators[$key]);
+        return (bool)(isset($this->decorators[$key]) && $this->decorators[$key]);
     }
 }
