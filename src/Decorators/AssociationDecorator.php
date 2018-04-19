@@ -32,7 +32,7 @@ class AssociationDecorator extends AbstractDecorator
     {
         $model = $this->harvester->recycleModel($model);
         if ($this->canUse($this->value)) {
-            return $model->load($this->value);
+            return $model->load($this->getArg($this->value));
         }
         return $model;
     }
