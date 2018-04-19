@@ -19,7 +19,7 @@ class AssociationDecorator extends AbstractDecorator
     {
         $builder = $this->harvester->recycleBuilder($builder);
         if ($this->canUse($this->value)) {
-            return $builder->with($this->value);
+            return $builder->with($this->getArg($this->value));
         }
         return $builder;
     }
@@ -44,5 +44,14 @@ class AssociationDecorator extends AbstractDecorator
     protected function canUse(string $value): bool
     {
         return (bool)preg_match('/^[a-z][a-z_.,]+[a-z]$/', $value);
+    }
+
+    /**
+     * @param string $value
+     * @return array
+     */
+    protected function getArg(string $value): array
+    {
+        return explode(',', $value);
     }
 }
