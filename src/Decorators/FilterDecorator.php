@@ -20,10 +20,10 @@ class FilterDecorator extends AbstractDecorator
     {
         $builder = $this->harvester->recycleBuilder($builder);
         $args = $this->getArgs($this->value);
-        foreach ($args as $arg) {
-            $condition = $this->getCondition($arg);
-            $action = $condition->action;
-            $builder->$action($builder);
+        foreach ($args as $key => $value) {
+            $condition = $this->getCondition([$key=>$value]);
+            $method = $condition->action;
+            $method($builder);
         }
         return $builder;
     }
