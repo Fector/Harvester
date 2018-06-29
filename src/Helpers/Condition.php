@@ -101,12 +101,15 @@ class Condition
             if (key_exists('in', $body)) {
                 $this->_type = 'inArray';
                 $this->_value = $body['in'];
-                list($relation, $field) = explode('.', $this->param);
-                $this->_action = function (Builder $builder) use ($c, $relation, $field) {
-                    return $builder->whereHas($relation, function ($query) use ($field, $c) {
-                        $query->whereIn($field, $c->value);
-                    });
-                };
+                if (stripos($this->param, '.')) {
+                    list($relation, $field) = explode('.', $this->param);
+                    $this->_action = function (Builder $builder) use ($c, $relation, $field) {
+                        return $builder->whereHas($relation, function ($query) use ($field, $c) {
+                            $query->whereIn($field, $c->value);
+                        });
+                    };
+                    return;
+                }
                 $this->_action = function (Builder $builder) use ($c) {
                     return $builder->whereIn($c->param, $c->value);
                 };
