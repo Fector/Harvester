@@ -19,7 +19,13 @@ class Condition
     /**
      * @var array
      */
-    protected $reservedNames = ['_operator', '_value'];
+    protected $comparators = [
+        '=',
+        '>',
+        '>=',
+        '<',
+        '<=',
+    ];
 
     /**
      * @var string
@@ -77,6 +83,15 @@ class Condition
         if (!is_array($body)) {
             $this->_type = 'equal';
             $this->_value = $body;
+            if (stripos($this->param, '.')) {
+                list($relation, $field) = explode('.', $this->param);
+                $this->_action = function (Builder $builder) use ($c, $relation, $field) {
+                    return $builder->whereHas($relation, function ($query) use ($field, $c) {
+                        $query->where($field, $c->value);
+                    });
+                };
+                return;
+            }
             $this->_action = function (Builder $builder) use ($c) {
                 return $builder->where($c->param, $c->value);
             };
@@ -96,6 +111,20 @@ class Condition
                 $this->_value = $body['not_in'];
                 $this->_action = function (Builder $builder) use ($c) {
                     return $builder->whereNotIn($c->param, $c->value);
+                };
+                return;
+            }
+            if (key_exists('is', $body)) {
+                $this->_type = 'isNull';
+                $this->_action = function (Builder $builder) use ($c) {
+                    return $builder->whereNull($c->param);
+                };
+                return;
+            }
+            if (key_exists('is_not', $body)) {
+                $this->_type = 'isNotNull';
+                $this->_action = function (Builder $builder) use ($c) {
+                    return $builder->whereNotNull($c->param);
                 };
                 return;
             }

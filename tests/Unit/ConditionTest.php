@@ -52,4 +52,24 @@ class ConditionTest extends TestCase
         $this->assertEquals('status', $condition->param);
         $this->assertEquals([1,2,'test'], $condition->value);
     }
+
+    public function testIsNull()
+    {
+        $arg = [
+            'status' => ['is' => null]
+        ];
+        $condition = new Condition($arg);
+        $this->assertEquals('isNull', $condition->type);
+        $this->assertEquals('status', $condition->param);
+    }
+
+    public function testIsNotNull()
+    {
+        $arg = [
+            'status' => ['is_not' => null]
+        ];
+        $condition = new Condition($arg);
+        $this->assertEquals('isNotNull', $condition->type);
+        $this->assertEquals('status', $condition->param);
+    }
 }
