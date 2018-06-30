@@ -104,8 +104,8 @@ class Condition
                 if (stripos($this->param, '.')) {
                     list($relation, $field) = explode('.', $this->param);
                     $this->_action = function (Builder $builder) use ($c, $relation, $field) {
-                        return $builder->whereHas($relation, function ($query) use ($field, $c) {
-                            $query->whereIn($field, $c->value);
+                        return $builder->whereHas($relation, function ($query) use ($c, $relation, $field) {
+                            $query->whereIn(implode('.', [$relation, $field]), $c->value);
                         });
                     };
                     return;
