@@ -14,4 +14,4 @@ jobs:
     - stage: lint
       script: ./vendor/bin/phpcs --standard=PSR2 src/
     - stage: test
-      script: ./vendor/bin/phpcs/phpunit --configuration phpunit.xml
+      script: ./vendor/bin/phpunit --configuration phpunit.xml
