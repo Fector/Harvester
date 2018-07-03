@@ -42,5 +42,4 @@ class CountDecorator extends AbstractDecorator
     {
         return (bool)preg_match('/^[a-z][a-z_.]+[a-z]$/', $value);
     }
-
 }
