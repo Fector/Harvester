@@ -7,13 +7,11 @@ branches:
   only:
   - master
 
-before_script:
-  - composer self-update
-  - composer install --prefer-source --no-interaction --dev
+before_script: composer install --prefer-source --no-interaction
 
 jobs:
   include:
     - stage: lint
-      script: phpcs --standard=PSR2 src/
+      script: ./vendor/bin/phpcs --standard=PSR2 src/
     - stage: test
-      script: phpunit --configuration phpunit.xml
+      script: ./vendor/bin/phpcs/phpunit --configuration phpunit.xml
