@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/shahob/Harvester.svg?branch=master)](https://travis-ci.org/shahob/Harvester)
+
 ## A simple library that provide modify Model by request query
 
 ### Installation

@@ -58,8 +58,12 @@ class EloquentHarvester
                 $harvester = new $decorator($harvester, $value);
             }
         }
-        if ($entity instanceof Builder) return $harvester->recycleBuilder($entity);
-        if ($entity instanceof Model) return $harvester->recycleModel($entity);
+        if ($entity instanceof Builder) {
+            return $harvester->recycleBuilder($entity);
+        }
+        if ($entity instanceof Model) {
+            return $harvester->recycleModel($entity);
+        }
         return $entity;
     }
 
