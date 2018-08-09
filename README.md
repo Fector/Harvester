@@ -68,5 +68,15 @@ or
 /api/books?_with=authors,publisher
 ```
 
+##### Selector
+You may specify which fields should be loaded.
+```
+/api/books?_select=title
+```
+or 
+```
+/api/books?_select=title,publisher
+```
+
 Plan to add new default Combines:
-Limiter, Skipper, Filter, Selector.
+Limiter, Skipper, Filter.
