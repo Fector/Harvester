@@ -45,11 +45,6 @@ class Condition
     /**
      * @var string
      */
-    protected $_whereMethod;
-
-    /**
-     * @var string
-     */
     protected $_operator;
 
     /**
