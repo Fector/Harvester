@@ -125,6 +125,7 @@ class Condition
     {
         switch ($this->_type) {
             case 'equal':
+                $method = 'where';
                 break;
             case 'inArray':
                 $method = 'whereIn';
