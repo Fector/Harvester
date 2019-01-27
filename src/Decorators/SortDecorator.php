@@ -72,5 +72,4 @@ class SortDecorator extends AbstractDecorator
     {
         return explode(',', $value);
     }
-
 }

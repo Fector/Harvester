@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class CountDecorator
+ * Class SelectDecorator
  * @package Fector\Harvest\Decorators
  */
-class CountDecorator extends AbstractDecorator
+class SelectDecorator extends AbstractDecorator
 {
     /**
      * @param Builder $builder
@@ -18,10 +18,12 @@ class CountDecorator extends AbstractDecorator
     public function recycleBuilder(Builder $builder): Builder
     {
         $builder = $this->harvester->recycleBuilder($builder);
-        if ($this->canUse($this->value)) {
-            return $builder->withCount($this->value);
+        $args = $this->getArgs($this->value);
+
+        if (empty($args)) {
+            return $builder;
         }
-        return $builder;
+        return $builder->select($args);
     }
 
     /**
@@ -40,6 +42,19 @@ class CountDecorator extends AbstractDecorator
      */
     protected function canUse(string $value): bool
     {
-        return (bool)preg_match('/^[a-z][a-z_.]+[a-z]$/', $value);
+        return (bool)preg_match('/^[a-z][a-z_.]*$/', $value);
+    }
+
+    /**
+     * @param string $value
+     * @return array
+     */
+    protected function getArgs(string $value): array
+    {
+        $args = [];
+        foreach (explode(',', $value) as $arg) {
+            $this->canUse($arg) && ($args[] = $arg);
+        }
+        return $args;
     }
 }

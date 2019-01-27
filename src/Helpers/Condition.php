@@ -30,7 +30,7 @@ class Condition
     /**
      * @var string
      */
-    protected $_param;
+    protected $_param; // @codingStandardsIgnoreLine
 
     /**
      * @var string
@@ -50,17 +50,17 @@ class Condition
     /**
      * @var string
      */
-    protected $_value;
+    protected $_value; // @codingStandardsIgnoreLine
 
     /**
      * @var string
      */
-    protected $_type;
+    protected $_type; // @codingStandardsIgnoreLine
 
     /**
      * @var \Closure
      */
-    protected $_action;
+    protected $_action; // @codingStandardsIgnoreLine
 
     /**
      * Condition constructor.

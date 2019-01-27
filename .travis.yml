@@ -1,0 +1,17 @@
+language: php
+php:
+  - '7.1'
+  - '7.2'
+
+branches:
+  only:
+  - master
+
+before_script: composer install --prefer-source --no-interaction
+
+jobs:
+  include:
+    - stage: lint
+      script: ./vendor/bin/phpcs --standard=PSR2 src/
+    - stage: test
+      script: ./vendor/bin/phpunit --configuration phpunit.xml
