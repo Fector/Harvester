@@ -111,9 +111,10 @@ class Condition
             } elseif (key_exists('is_not', $body)) {
                 $this->_type = 'isNotNull';
             }
+        } else {
+            $this->_type = 'unknown';
         }
 
-        $this->_type = 'unknown';
         $this->buildAction();
     }
 
