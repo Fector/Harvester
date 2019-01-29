@@ -35,7 +35,17 @@ class Condition
     /**
      * @var string
      */
-    protected $_operator; // @codingStandardsIgnoreLine
+    protected $_relation;
+
+    /**
+     * @var string
+     */
+    protected $_field;
+
+    /**
+     * @var string
+     */
+    protected $_operator;
 
     /**
      * @var string
@@ -77,67 +87,86 @@ class Condition
     protected function identify(array $arg): void
     {
         $param = key($arg);
-        $this->_param = $param;
         $body = $arg[$param];
-        $c = $this;
+        $this->_param = $param;
+        $delimiterPos = strripos($this->param, '.');
+
+        if ($delimiterPos !== false) {
+            $this->_relation = substr($this->param, 0, $delimiterPos);
+            $this->_field = substr($this->param, $delimiterPos + 1);
+        }
+
         if (!is_array($body)) {
             $this->_type = 'equal';
             $this->_value = $body;
-            if (stripos($this->param, '.')) {
-                list($relation, $field) = explode('.', $this->param);
-                $this->_action = function (Builder $builder) use ($c, $relation, $field) {
-                    return $builder->whereHas($relation, function ($query) use ($field, $c) {
-                        $query->where($field, $c->value);
-                    });
-                };
-                return;
-            }
-            $this->_action = function (Builder $builder) use ($c) {
-                return $builder->where($c->param, $c->value);
-            };
-            return;
-        }
-        if (is_array($body)) {
+        } elseif (is_array($body)) {
             if (key_exists('in', $body)) {
                 $this->_type = 'inArray';
                 $this->_value = $body['in'];
-                if (stripos($this->param, '.')) {
-                    list($relation, $field) = explode('.', $this->param);
-                    $this->_action = function (Builder $builder) use ($c, $relation, $field) {
-                        return $builder->whereHas($relation, function ($query) use ($c, $relation, $field) {
-                            $query->whereIn(implode('.', [$relation, $field]), $c->value);
-                        });
-                    };
-                    return;
-                }
-                $this->_action = function (Builder $builder) use ($c) {
-                    return $builder->whereIn($c->param, $c->value);
-                };
-                return;
-            }
-            if (key_exists('not_in', $body)) {
+            } elseif (key_exists('not_in', $body)) {
                 $this->_type = 'notInArray';
                 $this->_value = $body['not_in'];
-                $this->_action = function (Builder $builder) use ($c) {
-                    return $builder->whereNotIn($c->param, $c->value);
-                };
-                return;
-            }
-            if (key_exists('is', $body)) {
+            } elseif (key_exists('is', $body)) {
                 $this->_type = 'isNull';
-                $this->_action = function (Builder $builder) use ($c) {
-                    return $builder->whereNull($c->param);
-                };
-                return;
-            }
-            if (key_exists('is_not', $body)) {
+            } elseif (key_exists('is_not', $body)) {
                 $this->_type = 'isNotNull';
-                $this->_action = function (Builder $builder) use ($c) {
-                    return $builder->whereNotNull($c->param);
-                };
-                return;
+            }
+        } else {
+            $this->_type = 'unknown';
+        }
+
+        $this->buildAction();
+    }
+
+    /**
+     * @return void
+     */
+    protected function buildAction(): void
+    {
+        switch ($this->_type) {
+            case 'equal':
+                $method = 'where';
+                break;
+            case 'inArray':
+                $method = 'whereIn';
+                break;
+            case 'notInArray':
+                $method = 'whereNotIn';
+                break;
+            case 'isNull':
+                $method = 'whereNull';
+                break;
+            case 'isNotNull':
+                $method = 'whereNotNull';
+                break;
+            default:
+        }
+
+        if (isset($method)) {
+            $methodArgs = [$this->value];
+            if (in_array($method, [
+                'whereNull',
+                'whereNotNull',
+            ])) {
+                $methodArgs = [];
+            }
+
+            if ($this->_relation &&
+                $this->_field) {
+                $this->_action = (function (Builder $builder) use ($method, $methodArgs) {
+                    return $builder->whereHas($this->_relation, function (Builder $query) use ($method, $methodArgs) {
+                        array_unshift($methodArgs, $query
+                            ->getModel()
+                            ->getTable() . '.' . $this->_field);
+                        $query->{$method}(...$methodArgs);
+                    });
+                })->bindTo($this);
+            } else {
+                $this->_action = (function (Builder $builder) use ($method, $methodArgs) {
+                    array_unshift($methodArgs, $this->param);
+                    return $builder->{$method}(...$methodArgs);
+                })->bindTo($this);
             }
         }
-        $this->_type = 'unknown';
     }
 }
